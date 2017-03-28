@@ -2,6 +2,7 @@
   "name": "hello-world-web",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080/",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "react": "^15.4.2",

@@ -1,49 +1,60 @@
 import React, { Component } from 'react';
 import Timer from './components/Timer';
-import logo from './logo.svg';
+import logo from './star.svg';
 import './App.css';
-import { Button, ButtonToolbar } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import Client from './Client';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      textMessage: "Hello, ZZZZZ!",
+      count: 1,
+      name: "ZZZZZ",
+    }
+  }
+
+  handleNameChange = (e) => {
+    const value = e.target.value;
+    this.setState({ name: value });
+  }
+
+  onClickButton = () =>
+  {
+    const value = this.state.name;
+    Client.search(value, (content) => {
+        this.setState({
+          textMessage: content.content,
+        });
+      });
+
+  }
+
   render() {
-
-    const buttonsInstance = (
-      <ButtonToolbar>
-        {/* Standard button */}
-        <Button>Default</Button>
-
-        {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
-        <Button bsStyle="primary">Primary</Button>
-
-        {/* Indicates a successful or positive action */}
-        <Button bsStyle="success">Success</Button>
-
-        {/* Contextual button for informational alert messages */}
-        <Button bsStyle="info">Info</Button>
-
-        {/* Indicates caution should be taken with this action */}
-        <Button bsStyle="warning">Warning</Button>
-
-        {/* Indicates a dangerous or potentially negative action */}
-        <Button bsStyle="danger">Danger</Button>
-
-        {/* Deemphasize a button by making it look like a link while maintaining button behavior */}
-        <Button bsStyle="link">Link</Button>
-      </ButtonToolbar>
-    );
 
     return (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Welcome to HKBBAC</h2>
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <Timer />
+        <p className="App-intro">
+          <input
+              type='text'
+              placeholder='Your name'
+              value={this.state.name}
+              onChange={this.handleNameChange}
+            />
+          <Button onClick={this.onClickButton}>Call API</Button>
+        </p>
         <div>
-          {buttonsInstance}
+          {this.state.textMessage}
         </div>
       </div>
     );
